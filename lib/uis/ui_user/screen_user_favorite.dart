@@ -23,6 +23,7 @@ class ScreenUserFavoriteState extends State<ScreenUserFavorite> {
               return EmptyWidget(visible: true);
             }
             return PageView.builder(
+              physics: BouncingScrollPhysics(),
               itemCount: snapshot.data.length,
               itemBuilder: (BuildContext context, int index) {
                 UserInfo userInfo = snapshot.data[index];

@@ -9,7 +9,7 @@ class ListUser {
   }
 
   ListUser.fromJson(Map<String , dynamic> parseJson) {
-    print(parseJson.toString());
+    //print(parseJson.toString());
     _info = new Info(parseJson['info']);
     for(var i = 0 ; i < parseJson['results'].length; i++) {
       UserInfo userInfo = new UserInfo(parseJson['results'][i]);
@@ -44,7 +44,7 @@ class UserInfo {
     _registered = userInfo['registered'];
     _phone = userInfo['phone'];
     _cell = userInfo['cell'];
-    _id = Id.fromDB(userInfo['value']);
+    _id = Id.fromDB(userInfo['id']);
     _picture = Picture.fromDB(userInfo['large']);
   }
 

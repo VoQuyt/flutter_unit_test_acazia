@@ -17,12 +17,19 @@ class ProfileDetail extends StatefulWidget {
 class ProfileUser extends State<ProfileDetail> {
 
   int _selectedIndex = 0;
-  bool islike = false;
+  bool _islike = false;
 
   @override
-  void InitState() {
+  void initState() {
     super.initState();
-    //islike = widget.islike;
+    setIsLike();
+  }
+
+  Future<void> setIsLike() async {
+    var like = await DBProvider.db.isUserExit(widget.userInfo.id.value);
+    setState(() {
+      _islike = like;
+    });
   }
 
   @override
@@ -113,25 +120,26 @@ class ProfileUser extends State<ProfileDetail> {
               Text("My name is", style: TextStyle(fontSize: 30, color: Colors.grey)),
               IconButton(
                   icon: Icon(
-                    islike ? Icons.favorite : Icons.favorite_border,
+                    _islike ? Icons.favorite : Icons.favorite_border,
                     color: Colors.red,
                     size: 30,
                   ),
                   onPressed: () async {
+                    var isUserExit = await DBProvider.db.isUserExit(widget.userInfo.id.value);
                     setState(() {
-                      islike = !islike;
+                      _islike = !_islike;
                     });
-                    if(islike) {
-                      var isExitUser = await DBProvider.db.isUserExit(widget.userInfo.id.value);
-                      if(!isExitUser) {
+                    if(_islike) {
+                      if(!isUserExit) {
                         await DBProvider.db.addUser(widget.userInfo);
+
                       } else {
                         print("user is exit");
                       }
                     } else {
                       await DBProvider.db.deleteUser(widget.userInfo.id.value);
+                      print("delete success ${widget.userInfo.name.last}");
                     }
-                    print("like " + islike.toString());
                   })
             ],
           ),

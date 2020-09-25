@@ -45,15 +45,11 @@ class DBProvider {
 
   addUser(UserInfo newUser) async {
     final db = await database;
-    //get the biggest id in the table
-    //var table = await db.rawQuery("SELECT MAX(id)+1 as id FROM $tableUser");
-    //int id = table.first["id"];
-    //insert to the table using the new id
     var raw = await db.rawInsert(
         "INSERT Into $tableUser (id, first_name, last_name, gender, street, email, phone, cell, username, registered, large)"
             " VALUES (?,?,?,?,?,?,?,?,?,?,?)",
         [newUser.id.value, newUser.name.first, newUser.name.last, newUser.gender, newUser.location.street, newUser.email, newUser.phone, newUser.cell, newUser.login.username, newUser.registered, newUser.picture.large]);
-    print("===========> " + raw.toString());
+    print("add success ${newUser.name.last}");
     return raw;
   }
 
