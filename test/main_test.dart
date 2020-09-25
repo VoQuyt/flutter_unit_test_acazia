@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter_unit_test_acazia/models/model_user.dart';
 
 void main() {
